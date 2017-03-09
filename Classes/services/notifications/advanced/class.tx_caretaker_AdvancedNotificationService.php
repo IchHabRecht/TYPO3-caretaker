@@ -157,7 +157,7 @@ class tx_caretaker_AdvancedNotificationService extends tx_caretaker_AbstractNoti
     protected function processExitpoint($exitName, $exit, $notification)
     {
         $exitName = rtrim($exitName, '.');
-        if (!$this->doConditionsApply($exit['conditions.'], $notification)) {
+        if (!empty($exit['conditions.']) && !$this->doConditionsApply($exit['conditions.'], $notification)) {
             return;
         }
         $exitpoint = $this->getExitpointByIdentifier($exitName);
