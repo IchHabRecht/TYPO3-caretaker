@@ -128,8 +128,13 @@ class tx_caretaker_LatestVersionsHelper
             }
             if (is_array($details) && is_array($details['releases'])) {
                 foreach ($details['releases'] as $version => $versionDetails) {
-                    $security[$major] = $version;
+                    if ($versionDetails['type'] === 'release') {
+                        $security[$major] = $version;
+                    }
                     if ($versionDetails['type'] === 'security') {
+                        if (empty($security[$major]) || version_compare($version, $security[$major], '>')) {
+                            $security[$major] = $version;
+                        }
                         break;
                     }
                 }
